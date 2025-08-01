@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "MS98";
+    src:
+        url("/fonts/MSW98UI-Regular.woff") format("woff"),
+        url("/fonts/MSW98UI-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MS98";
+    src:
+        url("/fonts/MSW98UI-Bold.woff") format("woff"),
+        url("/fonts/MSW98UI-Bold.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@theme {
+    --font-ms: "MS98", "sans-serif";
+}
