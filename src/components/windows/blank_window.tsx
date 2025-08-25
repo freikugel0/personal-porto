@@ -1,8 +1,12 @@
 import { Rnd } from "react-rnd";
 import WindowTabs, { type Tab } from "../window_tabs";
-import React, { useEffect } from "react";
-import useWindowStore, { initSize } from "../../stores/window.store";
+import { useEffect } from "react";
+import useWindowStore, {
+  defaultInitSize,
+  type Size,
+} from "../../stores/window.store";
 import type { AppId } from "../../constant/registered_apps";
+import useAppStore from "../../stores/app.store";
 
 type BlankWindowProps =
   | ({
@@ -18,15 +22,18 @@ type CommonWindowProps = {
   appId: AppId;
   titlebar: React.ReactNode;
   menubar?: React.ReactNode;
+  initSize?: Size;
+  minSize?: Size;
 };
 
 const BlankWindow = (props: BlankWindowProps) => {
+  const { opened } = useAppStore();
   const { windows, initWindow, setPos, setSize, focusWindow } =
     useWindowStore();
 
   useEffect(() => {
-    initWindow(props.appId);
-  }, [props.appId]);
+    initWindow(props.appId, props.initSize);
+  }, [initWindow, props.appId, props.initSize]);
 
   const win = windows[props.appId];
   if (!win) return null;
@@ -39,8 +46,8 @@ const BlankWindow = (props: BlankWindowProps) => {
         width: win.size.width,
         height: win.size.height,
       }}
-      minWidth={initSize.width}
-      minHeight={initSize.height}
+      minWidth={props.minSize?.width ?? defaultInitSize.width}
+      minHeight={props.minSize?.height ?? defaultInitSize.height}
       bounds="parent"
       onDragStop={(_, data) => {
         setPos(props.appId, { x: data.x, y: data.y });
@@ -59,14 +66,14 @@ const BlankWindow = (props: BlankWindowProps) => {
       dragHandleClassName="window-drag-handle"
       style={{
         zIndex: win.zIndex,
-        position: "absolute",
+        visibility: opened.includes(props.appId) ? "visible" : "hidden"
       }}
     >
-      <div className="w-full h-full bg-slate-400 shadow-lg p-1 flex flex-col gap-2 text-sm cursor-default">
+      <div className="flex h-full w-full cursor-default flex-col gap-2 bg-slate-400 p-1 text-sm shadow-lg">
         <div className="window-drag-handle">{props.titlebar}</div>
         <div className="px-2">{props.menubar}</div>
         {props.type === "single" && (
-          <div className="w-full h-full border-2 border-l-slate-300 border-t-slate-300 border-r-1 border-r-slate-600 border-b-1 border-b-slate-600 overflow-auto">
+          <div className="h-full w-full overflow-auto border-2 border-r-1 border-b-1 border-t-slate-300 border-r-slate-600 border-b-slate-600 border-l-slate-300">
             {props.children}
           </div>
         )}

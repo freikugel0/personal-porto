@@ -32,6 +32,7 @@ const useMusicPlayer = create<MusicPlayerState>()((set, get) => {
         if (sound) {
           const dur = sound.duration();
           const pos = sound.seek() as number;
+          
           set({ progress: pos / dur, duration: dur });
         }
       };
@@ -62,6 +63,8 @@ const useMusicPlayer = create<MusicPlayerState>()((set, get) => {
       const sound = get().sound;
       if (sound?.playing()) {
         sound.pause();
+
+        clearInterval(progressInterval!);
         set({ isPlaying: false });
       }
     },

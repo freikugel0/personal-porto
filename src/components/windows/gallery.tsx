@@ -18,6 +18,14 @@ const Gallery = () => {
     <BlankWindow
       appId="gallery"
       type="single"
+      minSize={{
+        width: 400,
+        height: 450,
+      }}
+      initSize={{
+        width: 400,
+        height: 450,
+      }}
       titlebar={
         <WindowTitlebar
           icon={app.icon}
@@ -35,10 +43,10 @@ const Gallery = () => {
         />
       }
     >
-      <div className="w-full h-full flex flex-col gap-4 p-2 text-sm">
-        <div className="flex flex-col justify-between gap-2 h-full">
+      <div className="flex h-full w-full flex-col gap-4 p-2 text-sm">
+        <div className="flex h-full flex-col justify-between gap-2">
           {/* Image List */}
-          <div className="flex justify-between w-full">
+          <div className="flex w-full justify-between">
             <div className="flex flex-col">
               <h1>{imageList[imageIndex].meta.name}</h1>
               <p>{imageList[imageIndex].meta.fileSize}</p>
@@ -56,7 +64,7 @@ const Gallery = () => {
           <div>
             <img src={imageList[imageIndex].imageFile} className="h-full" />
           </div>
-          <div className="flex gap-6 items-center mx-auto">
+          <div className="mx-auto flex items-center gap-6">
             <Button
               onClick={() =>
                 imageIndex > 0 && setImageIndex((prev) => prev - 1)

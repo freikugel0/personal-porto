@@ -6,11 +6,11 @@ const Menu = () => {
   const { setOpened, setStartMenu } = useAppStore();
   return (
     <div
-      className="bg-slate-400 shadow-lg w-52 min-h-6/12 p-2 bottom-10 left-0 absolute flex gap-4 text-sm"
+      className="absolute bottom-10 left-0 flex min-h-6/12 w-52 gap-4 bg-slate-400 p-2 text-sm shadow-lg"
       style={{ zIndex: 9999999 }}
     >
       <div
-        className="text-sm text-white bg-slate-600 flex items-center px-4"
+        className="flex items-center bg-slate-600 px-4 text-sm text-white"
         style={{
           writingMode: "vertical-rl",
           textOrientation: "mixed",
@@ -20,21 +20,22 @@ const Menu = () => {
         freikugel
       </div>
       {/* Menu List */}
-      <div className="flex-1 flex flex-col gap-2">
-        {appsId.map((appid, i) => {
+      <div className="flex flex-1 flex-col">
+        {appsId.map((appid) => {
           const app = registeredApps[appid];
           return (
-            <div
-              key={i}
-              className="flex items-center gap-2 hover:bg-amber-200 hover:cursor-pointer p-2"
+            <button
+              type="button"
+              key={appid}
+              className="flex items-center gap-2 p-2 hover:cursor-pointer hover:bg-amber-200"
               onClick={() => {
                 setOpened(appid);
                 setStartMenu(false);
               }}
             >
-              {<app.icon size={18} />}
+              <div className="size-8">{app.icon}</div>
               <p>{app.name}</p>
-            </div>
+            </button>
           );
         })}
       </div>

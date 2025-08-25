@@ -6,7 +6,7 @@ type Pos = {
   y: number;
 };
 
-type Size = {
+export type Size = {
   width: number;
   height: number;
 };
@@ -22,32 +22,32 @@ type WindowState = {
   focusedAppId: AppId | null;
   zIndexCounter: number;
 
-  initWindow: (appId: AppId) => void;
+  initWindow: (appId: AppId, size?: Size) => void;
   setPos: (appId: AppId, pos: Pos) => void;
   setSize: (appId: AppId, size: Size) => void;
   focusWindow: (appId: AppId) => void;
 };
 
-export const initSize = { width: 500, height: 400 };
+export const defaultInitSize = { width: 500, height: 400 };
 const useWindowStore = create<WindowState>()((set, get) => ({
   windows: {},
   focusedAppId: null,
   zIndexCounter: 1,
 
-  initWindow: (appId) => {
+  initWindow: (appId, size) => {
     const state = get();
     if (state.windows[appId]) return;
 
-    const pos = {
-      x: window.innerWidth / 2 - initSize.width / 2,
-      y: window.innerHeight / 2 - initSize.height / 2,
+    const defaultPos = {
+      x: window.innerWidth / 2 - (size?.width ?? defaultInitSize.width) / 2,
+      y: window.innerHeight / 2 - (size?.height ?? defaultInitSize.height) / 2,
     };
     const newZ = state.zIndexCounter;
 
     set({
       windows: {
         ...state.windows,
-        [appId]: { pos, size: initSize, zIndex: newZ },
+        [appId]: { pos: defaultPos, size: size ?? defaultInitSize, zIndex: newZ },
       },
       focusedAppId: appId,
       zIndexCounter: newZ + 1,
