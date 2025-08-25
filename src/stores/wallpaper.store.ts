@@ -10,6 +10,33 @@ type ImageType = {
   imageFile: string;
 };
 
+export const imageList: ImageType[] = [
+  {
+    meta: {
+      name: "1.jpg",
+      fileSize: "488 kB",
+      resolution: "1920x1080",
+    },
+    imageFile: "/wallpaper/1.jpg",
+  },
+  {
+    meta: {
+      name: "2.jpg",
+      fileSize: "412 kB",
+      resolution: "1920x1080",
+    },
+    imageFile: "/wallpaper/2.jpg",
+  },
+  {
+    meta: {
+      name: "3.jpg",
+      fileSize: "704 kB",
+      resolution: "1920x1080",
+    },
+    imageFile: "/wallpaper/3.jpg"
+  }
+];
+
 type WallpaperState = {
   wallpaperId: number;
   setWallpaperId: (index: number) => void;
@@ -26,24 +53,5 @@ const useWallpaperStore = create<WallpaperState>()(
     },
   ),
 );
-
-export const imageList: ImageType[] = [
-  {
-    meta: {
-      name: "selpowerline.jpg",
-      fileSize: "488 kB",
-      resolution: "1440x1080",
-    },
-    imageFile: "/selpowerline.jpg",
-  },
-  {
-    meta: {
-      name: "selroom.jpg",
-      fileSize: "412 kB",
-      resolution: "1440x1080",
-    },
-    imageFile: "/selroom.jpg",
-  },
-];
 
 export default useWallpaperStore;

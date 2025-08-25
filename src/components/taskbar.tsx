@@ -1,10 +1,10 @@
-import { ClockFading, Volume2 } from "lucide-react";
+import { ClockFading, Eye, EyeOff, Volume2 } from "lucide-react";
 import Button from "./button";
 import useAppStore from "../stores/app.store";
 import { registeredApps } from "../constant/registered_apps";
 import CurrentTime from "./current_time";
 import useMusicPlayer from "../stores/music.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Taskbar = ({ ...props }: React.ComponentProps<"div">) => {
   const {
@@ -15,15 +15,17 @@ const Taskbar = ({ ...props }: React.ComponentProps<"div">) => {
     getCurrentAppState,
   } = useAppStore();
 
+  const [crtEnabled, setCrtEnabled] = useState(false);
+  useEffect(() => {
+    document.documentElement.classList.toggle("crt-effect", crtEnabled);
+  }, [crtEnabled]);
+
   const { volume, setVolume } = useMusicPlayer();
   const [popupVolume, setPopupVolume] = useState(false);
 
   return (
     <div
-      className="flex justify-between items-center w-full h-full max-h-10 z-50 absolute bottom-0 left-0 bg-slate-500 px-2 py-1 border-t border-t-slate-300"
-      style={{
-        zIndex: 99999999,
-      }}
+      className="z-index[9999] absolute bottom-0 left-0 z-50 flex h-full max-h-10 w-full items-center justify-between border-t border-t-slate-300 bg-slate-500 px-2 py-1"
       {...props}
     >
       {/* Left Side */}
@@ -33,52 +35,63 @@ const Taskbar = ({ ...props }: React.ComponentProps<"div">) => {
           onClick={() => toggleStartMenu()}
         >
           <div className="flex items-center gap-2 pr-1">
-            <img src="/lambda.png" className="size-6 grayscale" />
-            <p className="font-semibold">Menu</p>
+            <p>λ</p>
+            <p className="font-semibold">Run</p>
           </div>
         </Button>
-        <div className="bg-gray-400 w-px h-5" />
+        <div className="h-5 w-px bg-gray-400" />
         {/* Task List */}
         <div className="flex items-center gap-2">
-          {getRunning()
-            .reverse()
-            .map((appid, i) => {
-              const app = registeredApps[appid];
-              return (
-                <Button
-                  onClick={() => toggleOpen(appid)}
-                  variant={
-                    getCurrentAppState(appid) === "opened" ? "invert" : "normal"
-                  }
-                  key={i}
-                >
-                  <div className="flex items-center gap-2">
-                    {<app.icon size={15} />}
-                    <p className="text-sm">{app.name}</p>
-                  </div>
-                </Button>
-              );
-            })}
+          {getRunning().map((appid) => {
+            const app = registeredApps[appid];
+            return (
+              <Button
+                onClick={() => toggleOpen(appid)}
+                variant={
+                  getCurrentAppState(appid) === "opened" ? "invert" : "normal"
+                }
+                key={appid}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="size-4">{app.icon}</div>
+                  <p className="text-sm">{app.name}</p>
+                </div>
+              </Button>
+            );
+          })}
         </div>
       </div>
       {/* Right Side */}
       <div className="flex items-center gap-4">
         {/* Quick Icon */}
-        <div className="flex items-center gap-2">
+        <div className="relative flex items-center gap-2">
           <Volume2
             size={16}
             className="text-gray-300"
             onClick={() => setPopupVolume(!popupVolume)}
           />
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={volume}
-            onChange={(e) => setVolume(e.target.valueAsNumber)}
-          />
+          {popupVolume && (
+            <div className="absolute bottom-7 left-0 bg-slate-500 p-2">
+              <input
+                className="w-24"
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                onChange={(e) => setVolume(e.target.valueAsNumber)}
+              />
+            </div>
+          )}
         </div>
+        <button type="button" onClick={() => setCrtEnabled((prev) => !prev)}>
+          {crtEnabled ? (
+            <EyeOff size={16} className="text-gray-300" />
+          ) : (
+            <Eye size={16} className="text-gray-300" />
+          )}
+        </button>
+        <div className="h-5 w-px bg-gray-400" />
         <Button variant="invert">
           <div className="flex items-center gap-2">
             <ClockFading size={16} />

@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { useState } from "react";
 import { Rnd } from "react-rnd";
 import useAppStore from "../stores/app.store";
 import type { AppId } from "../constant/registered_apps";
 
 type DesktopIconProps = {
-  icon: LucideIcon;
+  icon: React.ReactNode;
   label: string;
   pos_x?: number;
   pos_y?: number;
@@ -39,14 +38,15 @@ const DesktopIcon = ({
         left: false,
       }}
     >
-      <div
-        className={`text-gray-100 text-shadow-lg font-semibold w-full h-full flex flex-col items-center justify-center cursor-default ${selected && "bg-gray-400/50"}`}
+      <button
+        type="button"
+        className={`flex h-full w-full gap-2 cursor-default flex-col items-center justify-center font-semibold text-gray-100 text-shadow-lg ${selected && "bg-gray-400/50"}`}
         onClick={() => setSelected((prev) => !prev)}
         onDoubleClick={() => setOpened(appid)}
       >
-        <AppIcon size={35} />
-        <p className="text-xs text-center mt-1">{label}</p>
-      </div>
+        <div className="size-14">{AppIcon}</div>
+        <p className="mt-1 text-center text-xs">{label}</p>
+      </button>
     </Rnd>
   );
 };

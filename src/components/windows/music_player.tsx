@@ -1,4 +1,4 @@
-import { Disc3, Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { registeredApps } from "../../constant/registered_apps";
 import useAppStore from "../../stores/app.store";
 import useMusicPlayer from "../../stores/music.store";
@@ -20,6 +20,14 @@ const MusicPlayer = () => {
     <BlankWindow
       appId="music_player"
       type="single"
+      initSize={{
+        width: 300,
+        height: 400,
+      }}
+      minSize={{
+        width: 300,
+        height: 400,
+      }}
       titlebar={
         <WindowTitlebar
           icon={app.icon}
@@ -37,13 +45,13 @@ const MusicPlayer = () => {
         />
       }
     >
-      <div className="flex flex-col justify-between w-full h-full gap-4 p-2 text-sm">
-        <div className="flex-1 w-full flex justify-center items-center">
-          <Disc3 className="animate-spin text-slate-800" size={180} />
+      <div className="flex h-full w-full flex-col justify-between gap-4 p-2 text-sm">
+        <div className="flex w-full flex-1 items-center justify-center">
+          <img src="/icons/music_icon.png" alt="Music Player" width="180px" />
         </div>
-        <p className="text-sm text-center">patient. - still awake</p>
-        <div className="flex flex-col w-full">
-          <div className="w-full flex flex-col gap-2">
+        <p className="text-center text-sm">patient. - still awake</p>
+        <div className="flex w-full flex-col">
+          <div className="flex w-full flex-col gap-2">
             <input
               type="range"
               min={0}
@@ -53,9 +61,9 @@ const MusicPlayer = () => {
               onChange={handleSeek}
               className="w-full"
             />
-            <div className="w-full grid grid-cols-3 px-2">
+            <div className="grid w-full grid-cols-3 px-2">
               <p className="text-sm">{(progress * duration).toFixed(1)}</p>
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex items-center justify-center gap-2">
                 <Button>
                   <SkipBack size={14} />
                 </Button>

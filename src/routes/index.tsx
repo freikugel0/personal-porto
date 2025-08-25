@@ -1,18 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Taskbar from "../components/taskbar";
-import Menu from "../components/windows/menu";
 import Desktop from "../components/desktop";
 import DesktopIcon from "../components/desktop_icon";
-import useAppStore from "../stores/app.store";
+import Taskbar from "../components/taskbar";
+import Menu from "../components/windows/menu";
 import { registeredApps } from "../constant/registered_apps";
-import React from "react";
+import useAppStore from "../stores/app.store";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { start_menu, setStartMenu, opened } = useAppStore();
+  const { start_menu, setStartMenu } = useAppStore();
 
   return (
     <div className="w-full">
@@ -20,6 +19,7 @@ function RouteComponent() {
         onClick={() => setStartMenu(false)}
         icons={[
           <DesktopIcon
+            key={registeredApps.projects.id}
             icon={registeredApps.about.icon}
             label={registeredApps.about.name}
             appid="about"
@@ -27,6 +27,7 @@ function RouteComponent() {
             pos_y={30}
           />,
           <DesktopIcon
+            key={registeredApps.projects.id}
             icon={registeredApps.projects.icon}
             label={registeredApps.projects.name}
             appid="projects"
@@ -35,13 +36,11 @@ function RouteComponent() {
           />,
         ]}
       />
-      {start_menu && <Menu />}
-      {opened &&
-        opened.map((appid, i) => {
-          const app = registeredApps[appid];
-          return <React.Fragment key={i}>{app.windowComponent}</React.Fragment>;
-        })}
       <Taskbar />
+      {start_menu && <Menu />}
+      {Object.entries(registeredApps).map(([appid, app]) => {
+        return <app.windowComponent key={appid} />;
+      })}
     </div>
   );
 }

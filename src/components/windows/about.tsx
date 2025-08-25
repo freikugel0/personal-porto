@@ -35,13 +35,14 @@ const About = () => {
           id: 0,
           label: "Dev",
           content: (
-            <div className="w-full flex flex-col items-center gap-4">
+            <div className="flex w-full flex-col items-center gap-4">
               <div className="flex flex-col gap-2">
                 <img
                   src="/copland.gif"
-                  className="invert w-40 float-left m-2"
+                  alt="Copland Logo"
+                  className="float-left m-2 w-40 invert"
                 />
-                <p className="bg-amber-200 mx-auto">whoami</p>
+                <p className="mx-auto bg-amber-200">whoami</p>
               </div>
               <p className="text-center">
                 Hello, my name is{" "}
@@ -49,22 +50,22 @@ const About = () => {
               </p>
               <p>
                 I’m a{" "}
-                <span className="underline text-amber-200">web developer</span>{" "}
+                <span className="text-amber-200 underline">web developer</span>{" "}
                 who loves exploring diverse technical and design approaches.
               </p>
               <p>
                 {" "}
                 I'm currently work with modern stacks like{" "}
-                <span className="underline text-amber-200">React</span>,{" "}
-                <span className="underline text-amber-200">TypeScript</span>,{" "}
-                <span className="underline text-amber-200">TailwindCSS</span>,{" "}
-                <span className="underline text-amber-200">TanStack</span>, and
+                <span className="text-amber-200 underline">React</span>,{" "}
+                <span className="text-amber-200 underline">TypeScript</span>,{" "}
+                <span className="text-amber-200 underline">TailwindCSS</span>,{" "}
+                <span className="text-amber-200 underline">TanStack</span>, and
                 frequently use libraries like{" "}
-                <span className="underline text-amber-200">Zustand</span> for
+                <span className="text-amber-200 underline">Zustand</span> for
                 flexible state management. On the backend side, i've developed
                 REST API app with{" "}
-                <span className="underline text-amber-200">Express.js</span> and{" "}
-                <span className="underline text-amber-200">Go</span>.
+                <span className="text-amber-200 underline">Express.js</span> and{" "}
+                <span className="text-amber-200 underline">Go</span>.
               </p>
               <p>
                 Outside of tech stack i'm mentioned above, I'd love to learn
@@ -78,15 +79,16 @@ const About = () => {
           id: 1,
           label: "Cup of Tea",
           content: (
-            <div className="w-full flex flex-col items-center gap-4">
-              <h1 className="text-center bg-amber-200">
+            <div className="flex w-full flex-col items-center gap-4">
+              <h1 className="bg-amber-200 text-center">
                 "here's a small cup of stories"
               </h1>
               <div>
                 <h1 className="text-xl font-semibold">Tech</h1>
                 <img
                   src="/pywal.gif"
-                  className="float-left h-[140px] mr-4 mb-1"
+                  alt="Linux Pywal"
+                  className="float-left mr-4 mb-1 h-[140px]"
                 />
                 <p className="text-justify">
                   I'm really into tech stuff, especially messing around with
@@ -101,7 +103,8 @@ const About = () => {
                 <h1 className="text-xl font-semibold">Hobbies</h1>
                 <img
                   src="/osu.gif"
-                  className="float-right h-[140px] ml-4 mb-1"
+                  alt="osu!mania Gameplay"
+                  className="float-right mb-1 ml-4 h-[140px]"
                 />
                 <p className="text-justify">
                   I’m also love games and music. I love RPGs (especially in the
@@ -119,18 +122,18 @@ const About = () => {
           id: 2,
           label: "Contact",
           content: (
-            <div className="w-full flex flex-col gap-4">
+            <div className="flex w-full flex-col gap-4">
               <h1 className="text-center">
                 I’m open to full-time opportunities as well as freelance
                 projects. Feel free to reach out via email or social media.
               </h1>
               <div className="flex flex-col items-end gap-4">
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <Mail />
                   <p>stevenfirdaus2327@gmail.com</p>
                 </div>
                 <div
-                  className="flex gap-2 items-center hover:cursor-pointer"
+                  className="flex items-center gap-2 hover:cursor-pointer"
                   onClick={() =>
                     window.open("https://github.com/freikugel0", "_blank")
                   }
@@ -139,7 +142,7 @@ const About = () => {
                   <p>freikugel0</p>
                 </div>
                 <div
-                  className="flex gap-2 items-center hover:cursor-pointer"
+                  className="flex items-center gap-2 hover:cursor-pointer"
                   onClick={() =>
                     window.open(
                       "https://www.instagram.com/freikugel0/",
